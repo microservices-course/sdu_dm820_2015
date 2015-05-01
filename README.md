@@ -28,7 +28,7 @@ Install the [Jolie programming language](http://www.jolie-lang.org/).
 
 1. Fork this repository in your user account.
 2. Have a look at [the rubric for the evaluation of microservices](https://github.com/microservices-course/material/blob/master/rubrics/design.md).
-3. Try to improve the code with respect to some aspect described in the rubric.
+3. Try to improve the code with respect to some aspect described in the rubric. Your improvement does not need to be complete! If it is complicated, just make a sketch; we will then discuss it at the next lecture. Commit the changes to your own git repository (the "fork").
 4. Issue a [pull request](https://help.github.com/articles/using-pull-requests/) to discuss your changes.
 
 # Exercise 3
