@@ -16,7 +16,7 @@ Install the [Jolie programming language](http://www.jolie-lang.org/).
 ### Try to run the program
 
 1. Start `chat.ol` first (the chat service), by running `jolie chat.ol` in a terminal.
-2. Try some commands in `client.ol`, for example `jolie client.ol open Jack 
+2. Try some commands in `client.ol`. Run `jolie client.ol --help` for a list of commands.
 
 # Exercise 1
 
