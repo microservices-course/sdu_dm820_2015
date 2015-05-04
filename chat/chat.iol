@@ -47,10 +47,20 @@ type HistoryRequest: void {
 	.roomName: string
 }
 
+type FaultyToken: void {
+	.roomName: string
+	.adminToken: AdminToken
+}
+
+type FaultyRoom: void {
+	.errorMessage: string
+	.roomName: string
+}
+
 interface ChatInterface {
 RequestResponse:
-	openRoom(OpenRequest)(string) throws Error(undefined),
-	closeRoom(CloseRequest)(void) throws Error(undefined),
-	publish(PublishRequest)(void) throws Error(undefined),
-	getHistory(HistoryRequest)(string) throws Error(undefined)
+	openRoom(OpenRequest)(string) throws FaultyRoom,
+	closeRoom(CloseRequest)(void) throws FaultyRoom FaultyToken,
+	publish(PublishRequest)(void) throws FaultyRoom,
+	getHistory(HistoryRequest)(string) throws FaultyRoom
 }
