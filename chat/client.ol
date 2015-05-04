@@ -35,6 +35,14 @@ Interfaces: ChatInterface
 
 main
 {
+	install( FaultyRoom =>
+		println@Console( "Illegal room name \"" + main.FaultyRoom.roomName + "\" used" )();
+		println@Console( main.FaultyRoom.errorMessage )()
+	);
+	install( FaultyToken =>
+		println@Console( "Wrong token for \"" + main.FaultyToken.roomName + "\"" )();
+		println@Console( "(token used: " + main.FaultyToken.adminToken + ")")()
+	);
 	if ( args[0] == "open" ) {
 		openRoom@Chat( { .username = args[1], .roomName = args[2] } )( adminToken );
 		println@Console( "Chat room opened. Admin token: " + adminToken )()

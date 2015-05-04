@@ -46,7 +46,11 @@ main
 {
 	[ openRoom( request )( adminToken ) {
 		if ( is_defined( global.rooms.(request.roomName) ) ) {
-			throw( Error )
+			with( errorInfo ) {
+				.errorMessage = "Room already exists";
+				.roomName = request.roomName
+			};
+			throw( FaultyRoom, errorInfo )
 		};
 		global.rooms.(request.roomName).history = "";
 		createSecureToken@SecurityUtils()( adminToken );
@@ -61,7 +65,11 @@ main
 
 	[ publish( request )() {
 		if ( !is_defined( global.rooms.(request.roomName) ) ) {
-			throw( Error )
+			with( errorInfo ) {
+				.errorMessage = "Room does not exist";
+				.roomName = request.roomName
+			};
+			throw( FaultyRoom, errorInfo )
 		};
 		m = "[" + request.roomName + "] "
 				+ request.username + ": "
@@ -72,17 +80,29 @@ main
 
 	[ getHistory( request )( history ) {
 		if ( !is_defined( global.rooms.(request.roomName) ) ) {
-			throw( Error )
+			with( errorInfo ) {
+				.errorMessage = "Room does not exist";
+				.roomName = request.roomName
+			};
+			throw( FaultyRoom, errorInfo )
 		};
 		history = global.rooms.(request.roomName).history
 	} ]
 
 	[ closeRoom( request )() {
 		if ( !is_defined( global.rooms.(request.roomName) ) ) {
-			throw( Error )
+			with( errorInfo ) {
+				.errorMessage = "Room does not exist";
+				.roomName = request.roomName
+			};
+			throw( FaultyRoom, errorInfo )
 		};
 		if ( request.adminToken != global.rooms.(request.roomName).adminToken ) {
-			throw( Error )
+			with( errorInfo ) {
+				.roomName = request.roomName;
+				.adminToken = request.adminToken
+			};
+			throw( FaultyToken, errorInfo )
 		};
 		println@Console(
 			"Room "
