@@ -24,10 +24,33 @@ THE SOFTWARE.
 
 */
 
+type AdminToken: string
+
+type OpenRequest: void {
+	.username: string
+	.roomName: string
+}
+
+type CloseRequest: void {
+	.username: string
+	.roomName: string
+	.adminToken: AdminToken
+}
+
+type PublishRequest: void {
+	.username: string
+	.roomName: string
+	.message: string
+}
+
+type HistoryRequest: void {
+	.roomName: string
+}
+
 interface ChatInterface {
 RequestResponse:
-	openRoom(undefined)(undefined) throws Error(undefined),
-	closeRoom(undefined)(undefined) throws Error(undefined),
-	publish(undefined)(undefined) throws Error(undefined),
-	getHistory(undefined)(undefined) throws Error(undefined)
+	openRoom(OpenRequest)(string) throws Error(undefined),
+	closeRoom(CloseRequest)(void) throws Error(undefined),
+	publish(PublishRequest)(void) throws Error(undefined),
+	getHistory(HistoryRequest)(string) throws Error(undefined)
 }
