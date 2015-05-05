@@ -26,6 +26,7 @@ THE SOFTWARE.
 
 include "chat.iol"
 include "console.iol"
+include "database.iol"
 include "security_utils.iol"
 
 execution { concurrent }
@@ -44,10 +45,27 @@ Interfaces: ChatInterface
 
 main
 {
+    with ( connectionInfo ) {
+        .username = "jolienoob";
+        .password = "";
+        .host = "";
+        .database = "somedatabase"; // "." for memory-only
+        .driver = "somedriver"
+    };
+    connect@Database( connectionInfo )( void );
+
+    scope ( createTable ) {
+        install ( SQLException => println@Console("Rooms table already there")() );
+        updateRequest =
+            "CREATE TABLE rooms(roomName VARCHAR(50) NOT NULL, " +
+            "adminToken VARCHAR(50) NOT NULL," +
+            "PRIMARY KEY(roomName))";
+        update@Database( updateRequest )( ret )
+    };
+
+    /*Change proceses to use the database*/
 	[ openRoom( request )( adminToken ) {
-		if ( is_defined( global.rooms.(request.roomName) ) ) {
-			throw( Error )
-		};
+		
 		global.rooms.(request.roomName).history = "";
 		createSecureToken@SecurityUtils()( adminToken );
 		global.rooms.(request.roomName).adminToken = adminToken;
